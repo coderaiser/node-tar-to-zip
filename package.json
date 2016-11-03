@@ -1,0 +1,17 @@
+{
+  "name": "tar-to-zip",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/tar-to-zip.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "pipe-io": "^1.2.5",
+    "tar-stream": "^1.5.2",
+    "yazl": "^2.4.2"
+  }
+}
