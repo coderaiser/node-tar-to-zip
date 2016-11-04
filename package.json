@@ -2,9 +2,10 @@
   "name": "tar-to-zip",
   "version": "1.0.0",
   "description": "convert tar and tar.gz archives to zip",
-  "main": "lib/tar2zip.js",
+  "main": "lib/tar-to-zip.js",
   "bin": {
-    "tar2zip": "bin/tar2zip.js"
+    "tar2zip": "bin/tar-to-zip.js",
+    "tar-to-zip": "bin/tar-to-zip.js"
   },
   "scripts": {
     "6to5:lib": "babel lib -d legacy/lib",
@@ -19,11 +20,16 @@
     "lint": "redrun lint:*",
     "test": "tape 'test/**/*.js'",
     "coverage": "nyc npm test",
+    "coverage:summary": "nyc --reporter=text-summary npm test",
     "report": "nyc report --reporter=text-lcov | coveralls",
     "watcher": "nodemon -w test -w lib --exec",
     "watch:test": "npm run watcher -- npm test",
     "watch:coverage": "npm run watcher -- npm run coverage",
     "watch:lint": "npm run watcher -- npm run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/coderaiser/node-tar-to-zip"
   },
   "keywords": [
     "tar",

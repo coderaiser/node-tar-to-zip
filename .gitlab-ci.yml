@@ -1,0 +1,9 @@
+image: node
+
+tests:
+  script:
+   - npm i --silent
+   - npm run lint
+   - npm run coverage
+   - npm run coverage:summary
+

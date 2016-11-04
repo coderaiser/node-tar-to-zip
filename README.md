@@ -1,13 +1,13 @@
-# Tar2Zip [![License][LicenseIMGURL]][LicenseURL] [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL] [![Coverage Status][CoverageIMGURL]][CoverageURL]
+# Tar-to-Zip [![License][LicenseIMGURL]][LicenseURL] [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL] [![Coverage Status][CoverageIMGURL]][CoverageURL]
 
 Convert tar and tar.gz archives to zip.
 
 ## Global
 
-`tar2zip` could be installed globally with:
+`tar-to-zip` could be installed globally with and used as `tar-to-zip` or `tar2zip`:
 
 ```
-npm i tar2zip -g
+npm i tar-to-zip -g
 ```
 
 ### Usage
@@ -29,27 +29,27 @@ cat arc.tar | tar2zip > arc.zip
 
 ## Local
 
-`tar2zip` could be used localy. It will emit event on every file from converted archive.
+`tar-to-zip` could be used localy. It will emit event on every file from converted archive.
 
 ## Install
 
 ```
-npm i tar2zip --save
+npm i tar-to-zip --save
 ```
 
 ## API
 
-`tar2zip` can work with `filename` and `ReadableStream`. When `filename` used `tar2zip` can emit
+`tar-to-zip` can work with `filename` and `ReadableStream`. When `filename` used `tar-to-zip` can emit
 progress of coverting (with `options`: `{progress: true}`).
 
-## tar2zip(filename, options)
+## tar-to-zip(filename, options)
 
 - `filename` - **string** name of the file
 - `options` - **object** with properties:
   - `progress` - whether emit `progress` event.
 
 ```js
-const tarToZip = require('..');
+const tarToZip = require('tar-to-zip');
 const fs = require('fs');
 const {stdout} = process;
 const onProgress = (n) => {
@@ -77,12 +77,12 @@ tarToZip('file.tar.gz', {progress})
 
 ```
 
-## tar2zip(stream)
+## tar-to-zip(stream)
 
 - `stream` - **ReadableStream** stream with `tar` data.
 
 ```js
-const tarToZip = require('..');
+const tarToZip = require('tar-to-zip');
 const fs = require('fs');
 const {stdout} = process;
 const onProgress = (n) => {
@@ -109,29 +109,28 @@ tarToZip(tar, {progress})
 
 ## Environments
 
-In old `node.js` environments that not fully supports `es2015`, `tar2zip` could be used with:
+In old `node.js` environments that not fully supports `es2015`, `tar-to-zip` could be used with:
 
 ```js
-var tar2zip = require('tar2zip/legacy');
+var tarToZip = require('tar-to-zip/legacy');
 ```
 ## Related
 
 - [Jaguar](https://github.com/coderaiser/node-jaguar "Jaguar") - Pack and extract .tar.gz archives with emitter.
-
 - [OneZip](https://github.com/coderaiser/node-onezip "OneZip") - Pack and extract zip archives with emitter.
 
 ## License
 
 MIT
 
-[NPMIMGURL]:                https://img.shields.io/npm/v/tar2zip.svg?style=flat
-[BuildStatusIMGURL]:        https://img.shields.io/travis/coderaiser/node-tar2zip/master.svg?style=flat
-[DependencyStatusIMGURL]:   https://img.shields.io/gemnasium/coderaiser/node-tar2zip.svg?style=flat
+[NPMIMGURL]:                https://img.shields.io/npm/v/tar-to-zip.svg?style=flat
+[BuildStatusIMGURL]:        https://img.shields.io/travis/coderaiser/node-tar-to-zip/master.svg?style=flat
+[DependencyStatusIMGURL]:   https://img.shields.io/gemnasium/coderaiser/node-tar-to-zip.svg?style=flat
 [LicenseIMGURL]:            https://img.shields.io/badge/license-MIT-317BF9.svg?style=flat
-[NPMURL]:                   https://npmjs.org/package/tar2zip "npm"
-[BuildStatusURL]:           https://travis-ci.org/coderaiser/node-tar2zip  "Build Status"
-[DependencyStatusURL]:      https://gemnasium.com/coderaiser/node-tar2zip "Dependency Status"
+[NPMURL]:                   https://npmjs.org/package/tar-to-zip "npm"
+[BuildStatusURL]:           https://travis-ci.org/coderaiser/node-tar-to-zip  "Build Status"
+[DependencyStatusURL]:      https://gemnasium.com/coderaiser/node-tar-to-zip "Dependency Status"
 [LicenseURL]:               https://tldrlegal.com/license/mit-license "MIT License"
 
-[CoverageURL]:              https://coveralls.io/github/coderaiser/node-tar2zip?branch=master
-[CoverageIMGURL]:           https://coveralls.io/repos/coderaiser/node-tar2zip/badge.svg?branch=master&service=github
+[CoverageURL]:              https://coveralls.io/github/coderaiser/node-tar-to-zip?branch=master
+[CoverageIMGURL]:           https://coveralls.io/repos/coderaiser/node-tar-to-zip/badge.svg?branch=master&service=github
