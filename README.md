@@ -1,10 +1,13 @@
 # Tar2Zip [![License][LicenseIMGURL]][LicenseURL] [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL] [![Coverage Status][CoverageIMGURL]][CoverageURL]
 
+> Make every program a filter
+(c) Mike Gancarz: The UNIX Philosophy
+
 Convert tar and tar.gz archives to zip.
 
 ## Global
 
-`tar2zip` could be installed global with
+`tar2zip` could be installed globally with:
 
 ```
 npm i tar2zip -g
