@@ -42,7 +42,7 @@ npm i tar-to-zip --save
 `tar-to-zip` can work with `filename` and `ReadableStream`. When `filename` used `tar-to-zip` can emit
 progress of coverting (with `options`: `{progress: true}`).
 
-## tar-to-zip(filename, options)
+## tarToZip(filename, options)
 
 - `filename` - **string** name of the file
 - `options` - **object** with properties:
@@ -77,7 +77,7 @@ tarToZip('file.tar.gz', {progress})
 
 ```
 
-## tar-to-zip(stream)
+## tarToZip(stream)
 
 - `stream` - **ReadableStream** stream with `tar` data.
 
