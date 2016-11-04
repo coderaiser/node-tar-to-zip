@@ -6,9 +6,11 @@ const arg = process.argv
     .slice(2)
     .pop();
 
+const isTTY = process.stdin.isTTY;
+
 if (/^(-v|--version)$/.test(arg))
     return version();
-else if (!arg || /^(-h|--help)$/.test(arg))
+else if (!arg && isTTY || /^(-h|--help)$/.test(arg))
     return help();
 
 const tarToZip = require('..');
@@ -34,6 +36,13 @@ function getZipPath(name) {
 }
 
 function main(name) {
+    if (!name) {
+        return tarToZip(process.stdin)
+            .getStream()
+            .on('error', console.log)
+            .pipe(process.stdout);
+    }
+    
     const onError = (e) => {
         console.log(e.message);
     };
@@ -74,7 +83,7 @@ function info() {
 
 function help() {
     const bin = require('../help');
-    const usage = `Usage: ${info().name} [path]`;
+    const usage = `Usage: ${info().name} [filename]`;
     
     console.log(usage);
     console.log('Options:');
