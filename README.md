@@ -1,8 +1,5 @@
 # Tar2Zip [![License][LicenseIMGURL]][LicenseURL] [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL] [![Coverage Status][CoverageIMGURL]][CoverageURL]
 
-> Make every program a filter
-(c) Mike Gancarz: The UNIX Philosophy
-
 Convert tar and tar.gz archives to zip.
 
 ## Global
@@ -13,19 +10,21 @@ Convert tar and tar.gz archives to zip.
 npm i tar2zip -g
 ```
 
-And used this way:
+### Usage
+
+Convert `tar` (or `tar.gz`) archive to `zip` in same directory:
 
 ```
-Usage: tar2zip [filename]
-Options:
-  -h, --help      display this help and exit
-  -v, --version   output version information and exit
+tar2zip arc.tar.gz
 ```
 
+> Make every program a filter
+(c) Mike Gancarz: The UNIX Philosophy
+
+Convert `tar` data from `stdin` and pipe it to `stdout`.
+
 ```
-cat arc.tar.gz | tar2zip > arc.zip
 cat arc.tar | tar2zip > arc.zip
-tar2zip arc.tar # it will create arz.zip
 ```
 
 ## Local
