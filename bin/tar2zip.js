@@ -7,11 +7,14 @@ const arg = process.argv
     .pop();
 
 if (/^(-v|--version)$/.test(arg))
-    version();
-else if (/^(-h|--help)$/.test(arg))
-    help();
-else
-    main(arg);
+    return version();
+else if (!arg || /^(-h|--help)$/.test(arg))
+    return help();
+
+const tarToZip = require('..');
+const fs = require('fs');
+
+main(arg);
 
 function getTarPath(name) {
     if (/^(\/|~)/.test(name))
@@ -22,33 +25,43 @@ function getTarPath(name) {
 }
 
 function getZipPath(name) {
-    if (/\.tar$/.test(name))
-        return name.replace(/\.tar$/, '.zip');
+    const reg = /\.tar(\.gz)?$/;
+    
+    if (reg.test(name))
+        return name.replace(reg, '.zip');
     
     return name + '.zip';
 }
 
-function main(name {
-    const tarToZip = require('..');
-    const fs = require('fs');
+function main(name) {
+    const onError = (e) => {
+        console.log(e.message);
+    };
+    
+    const onProgress = (n) => {
+        process.stdout.write(`\r${n}%`);
+    };
+    
+    const onFinish = () => {
+        process.stdout.write('\n');
+    };
     
     const pathTar = getTarPath(name);
-    const tar = fs.createReadStream(file)
-        .on('error', console.log);
     
     const pathZip = getZipPath(pathTar);
     const zip = fs.createWriteStream(pathZip)
-        .on('error', console.log);
+        .on('error', (e) => {
+            onError(e);
+            fs.unlinkSync(pathZip);
+        });
     
-    tarToZip(tar)
-        .on('progress', (n) => {
-            process.stdout.write(`\r${n}`);
-        })
+    const progress = true;
+    
+    tarToZip(pathTar, {progress})
+        .on('progress', onProgress)
         .getStream()
         .pipe(zip)
-        .on('finish', () => {
-            process.stdout.write('\n');
-        });
+        .on('finish', onFinish);
 }
 
 function version() {
