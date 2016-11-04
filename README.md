@@ -19,7 +19,8 @@ tar2zip arc.tar.gz
 ```
 
 > Make every program a filter
-(c) Mike Gancarz: The UNIX Philosophy
+> 
+> (c) Mike Gancarz: The UNIX Philosophy
 
 Convert `tar` data from `stdin` and pipe it to `stdout`.
 
