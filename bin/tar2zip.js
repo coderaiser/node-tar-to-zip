@@ -9,14 +9,11 @@ const arg = process.argv
 const isTTY = process.stdin.isTTY;
 
 if (/^(-v|--version)$/.test(arg))
-    return version();
+    version();
 else if (!arg && isTTY || /^(-h|--help)$/.test(arg))
-    return help();
-
-const tarToZip = require('..');
-const fs = require('fs');
-
-main(arg);
+    help();
+else
+    main(arg);
 
 function getTarPath(name) {
     if (/^(\/|~)/.test(name))
@@ -36,6 +33,9 @@ function getZipPath(name) {
 }
 
 function main(name) {
+    const tarToZip = require('..');
+    const fs = require('fs');
+
     if (!name) {
         return tarToZip(process.stdin)
             .getStream()

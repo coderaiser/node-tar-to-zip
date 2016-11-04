@@ -5,7 +5,9 @@
   "main": "lib/tar-to-zip.js",
   "bin": {
     "tar2zip": "bin/tar-to-zip.js",
-    "tar-to-zip": "bin/tar-to-zip.js"
+    "tar-to-zip": "bin/tar-to-zip.js",
+    "tar2zip_": "legacy/bin/tar-to-zip.js",
+    "tar-to-zip_": "legacy/bin/tar-to-zip.js"
   },
   "babel": {
     "presets": [
@@ -14,9 +16,12 @@
   },
   "scripts": {
     "6to5:lib": "babel lib -d legacy/lib",
+    "6to5:bin": "babel lib -d legacy/bin",
     "wisdom": "npm run build",
     "build": "redrun 6to5:* legacy:*",
     "legacy:index": "echo \"module.exports = require('./lib/tar-to-zip');\" > legacy/index.js",
+    "legacy:package": "echo \"module.exports = require('../package');\" > legacy/package.js",
+    "legacy:help": "echo \"module.exports = require('../help');\" > legacy/help.js",
     "lint:eslint": "eslint lib",
     "lint:eslint:bin": "eslint bin --config .eslint-bin.rc",
     "lint": "redrun lint:*",
