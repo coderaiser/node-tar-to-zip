@@ -17,7 +17,6 @@
     "lint:eslint": "eslint lib",
     "lint:eslint:bin": "eslint bin --config .eslint-bin.rc",
     "lint": "redrun lint:*",
-    "jscs-fix": "npm run jscs --fix",
     "test": "tape 'test/**/*.js'",
     "coverage": "nyc npm test",
     "report": "nyc report --reporter=text-lcov | coveralls",
