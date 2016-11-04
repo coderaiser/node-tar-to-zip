@@ -4,7 +4,7 @@ Convert tar and tar.gz archives to zip.
 
 ## Global
 
-`tar-to-zip` could be installed globally with and used as `tar-to-zip` or `tar2zip`:
+`tar-to-zip` could be installed globally and used as `tar-to-zip` or `tar2zip`:
 
 ```
 npm i tar-to-zip -g
