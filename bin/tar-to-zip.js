@@ -2,9 +2,8 @@
 
 'use strict';
 
-const arg = process.argv
-    .slice(2)
-    .pop();
+const args = process.argv.slice(2)
+const arg = args[0];
 
 const isTTY = process.stdin.isTTY;
 
@@ -12,8 +11,13 @@ if (/^(-v|--version)$/.test(arg))
     version();
 else if (!arg && isTTY || /^(-h|--help)$/.test(arg))
     help();
+else if (args.length)
+    eachSeries(args, main, exitIfError);
 else
-    main(arg);
+    require('..')(process.stdin)
+        .getStream()
+        .on('error', console.log)
+        .pipe(process.stdout);
 
 function getTarPath(name) {
     if (/^(\/|~)/.test(name))
@@ -32,27 +36,17 @@ function getZipPath(name) {
     return name + '.zip';
 }
 
-function main(name) {
+function main(name, done) {
     const tarToZip = require('..');
     const fs = require('fs');
-
-    if (!name) {
-        return tarToZip(process.stdin)
-            .getStream()
-            .on('error', console.log)
-            .pipe(process.stdout);
-    }
-    
-    const onError = (e) => {
-        console.log(e.message);
-    };
     
     const onProgress = (n) => {
-        process.stdout.write(`\r${n}%`);
+        process.stdout.write(`\r${n}%: ${name}`);
     };
     
     const onFinish = () => {
         process.stdout.write('\n');
+        done();
     };
     
     const pathTar = getTarPath(name);
@@ -60,8 +54,8 @@ function main(name) {
     const pathZip = getZipPath(pathTar);
     const zip = fs.createWriteStream(pathZip)
         .on('error', (e) => {
-            onError(e);
             fs.unlinkSync(pathZip);
+            exitIfError(e);
         });
     
     const progress = true;
@@ -71,6 +65,13 @@ function main(name) {
         .getStream()
         .pipe(zip)
         .on('finish', onFinish);
+}
+
+function exitIfError(e) {
+    if (!e)
+        return;
+    
+    process.exit(1);
 }
 
 function version() {
@@ -91,5 +92,34 @@ function help() {
     Object.keys(bin).forEach((name) => {
         console.log(`  ${name} ${bin[name]}`);
     });
+}
+
+function eachSeries(array, iterator, done) {
+    check(array, iterator, done);
+    
+    let i = -1;
+    const n = array.length;
+    
+    const loop = (e) => {
+       ++i;
+       
+       if (e || i === n)
+           return done(e);
+       
+       iterator(array[i], loop);
+    };
+    
+    loop();
+}
+
+function check(array, iterator, done) {
+    if (!Array.isArray(array))
+        throw Error('array should be an array!');
+    
+    if (typeof iterator !== 'function')
+        throw Error('iterator should be a function');
+    
+    if (typeof done !== 'function')
+        throw Error('done should be a function');
 }
 

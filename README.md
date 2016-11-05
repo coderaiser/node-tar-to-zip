@@ -12,14 +12,14 @@ npm i tar-to-zip -g
 
 ### Usage
 
-Convert `tar` (or `tar.gz`) archive to `zip` in same directory:
+Convert all `tar.gz` archive to `zip` in same directory:
 
 ```
-tar2zip arc.tar.gz
+tar2zip *.tar.gz
 ```
 
 > Make every program a filter
-> 
+>
 > (c) Mike Gancarz: The UNIX Philosophy
 
 Convert `tar` data from `stdin` and pipe it to `stdout`.
