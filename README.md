@@ -12,7 +12,7 @@ npm i tar-to-zip -g
 
 ### Usage
 
-Convert all `tar.gz` archive to `zip` in same directory:
+Convert all `tar.gz` archives to `zip` in same directory:
 
 ```
 tar2zip *.tar.gz
