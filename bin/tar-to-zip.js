@@ -71,6 +71,7 @@ function exitIfError(e) {
     if (!e)
         return;
     
+    console.error(e.message);
     process.exit(1);
 }
 
