@@ -1,3 +1,9 @@
+2016.11.07, v1.1.1
+
+fix:
+- (tar-to-zip) error: console.log -> exitIfError
+
+
 2016.11.05, v1.1.0
 
 feature:
