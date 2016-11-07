@@ -16,7 +16,7 @@ else if (args.length)
 else
     require('..')(process.stdin)
         .getStream()
-        .on('error', console.log)
+        .on('error', exitIfError)
         .pipe(process.stdout);
 
 function getTarPath(name) {
