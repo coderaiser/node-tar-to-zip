@@ -12,7 +12,7 @@ if (/^(-v|--version)$/.test(arg))
 else if (!arg && isTTY || /^(-h|--help)$/.test(arg))
     help();
 else if (args.length)
-    require('itchy')(args, main, exitIfError);
+    require('itchy/legacy')(args, main, exitIfError);
 else
     require('..')(process.stdin)
         .getStream()
