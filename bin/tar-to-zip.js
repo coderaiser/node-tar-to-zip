@@ -28,7 +28,7 @@ function getTarPath(name) {
 }
 
 function getZipPath(name) {
-    const reg = /\.tar(\.gz)?$/;
+    const reg = /\.(tar(\.gz)?|tgz)$/;
     
     if (reg.test(name))
         return name.replace(reg, '.zip');
