@@ -87,6 +87,33 @@ test('tar2zip: filename: progress', (t) => {
         });
 });
 
+test('tar2zip: filename: map: filter all', (t) => {
+    const map = () => false;
+    const expect = 'No entries found in the tar stream';
+    
+    tar2zip(getFixtureTar(), {map})
+        .on('error', (e) => {
+            t.equal(e.message, expect, 'should emit error when can not file file');
+            t.end();
+        });
+});
+
+test('tar2zip: filename: map: change path', (t) => {
+    const map = (header) => {
+        header.name = 'sub/' + header.name;
+        return header;
+    };
+    
+    tar2zip(getFixtureTar(), {map})
+        .on('file', (file) => {
+            t.equal(file, 'sub/fixture.txt', 'should change path');
+        })
+        .getStream()
+        .on('finish', () => {
+            t.end();
+        });
+});
+
 test('tar2zip: stream: error: not a tar', (t) => {
     const expect = 'No entries found in the tar stream';
     
