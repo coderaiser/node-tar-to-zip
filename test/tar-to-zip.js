@@ -87,6 +87,13 @@ test('tar2zip: filename: progress', (t) => {
         });
 });
 
+test('tar2zip: filename: map: wrong type', (t) => {
+    const fn = () => tar2zip(5);
+    
+    t.throws(fn, /file could be String or Readable Stream only!/, 'should throw when no args');
+    t.end();
+});
+
 test('tar2zip: filename: map: filter all', (t) => {
     const map = () => false;
     const expect = 'No entries found in the tar stream';
