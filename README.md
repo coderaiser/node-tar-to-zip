@@ -43,7 +43,9 @@ npm i tar-to-zip --save
 `tar-to-zip` can work with `filename` and `ReadableStream`. When `filename` used `tar-to-zip` can emit
 progress of coverting (with `options`: `{progress: true}`).
 
-### tarToZip(filename, options)
+`tar-to-zip` can transform the files as they are being processed using `options`: `map` and `filter`.
+
+### tarToZip(filename, {progress})
 
 - `filename` - **string** name of the file
 - `options` - **object** with properties:
@@ -62,7 +64,7 @@ const onFinish = (e) => {
 };
 
 const onError = ({message}) => {
-    console.error(message)
+    console.error(message);
 };
 
 const zip = fs.createWriteStream('file.zip');
@@ -109,6 +111,52 @@ tarToZip(tar, {progress})
     .on('finish', onFinish);
 ```
 
+### tarToZip(stream, {filter, map})
+
+- `options` - **ReadableStream** with `tar` data.
+  - `filter` - function to filter out files. Return `false` to exclude a file.
+  - `map` - function to transform file name/type.
+
+```js
+const tarToZip = require('tar-to-zip');
+const fs = require('fs');
+const {stdout} = process;
+const onProgress = (n) => {
+    stdout.write(`\r${n}`);
+};
+
+const onFinish = (e) => {
+    stdout.write('\n');
+};
+
+const onError = ({message}) => {
+    console.error(message);
+};
+
+const zip = fs.createWriteStream('file.zip');
+
+// exclude all but example.txt
+const filter = ({name}) => {
+    return name === 'example.txt';
+};
+
+
+// replace all .txt extensions with .doc
+const map = ({name}) => {
+    return {
+        name: name.replace(/\.txt$/, '.doc');
+    }
+};
+
+tarToZip('file.tar.gz', {filter, progress})
+    .on('file', console.log)
+    .on('error', onError);
+    .getStream()
+    .pipe(zip)
+    .on('finish', onFinish);
+
+```
+
 ## Environments
 
 In old `node.js` environments that not fully supports `es2015`, `tar-to-zip` could be used with:
@@ -137,3 +185,4 @@ MIT
 
 [CoverageURL]:              https://coveralls.io/github/coderaiser/node-tar-to-zip?branch=master
 [CoverageIMGURL]:           https://coveralls.io/repos/coderaiser/node-tar-to-zip/badge.svg?branch=master&service=github
+

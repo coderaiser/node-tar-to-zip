@@ -87,6 +87,51 @@ test('tar2zip: filename: progress', (t) => {
         });
 });
 
+test('tar2zip: filename: filter: wrong type', (t) => {
+    const fn = () => tar2zip(getFixtureTar(), {
+        filter: 'test'
+    });
+    
+    t.throws(fn, /filter should be a function!/, 'should throw then not a function');
+    t.end();
+});
+
+test('tar2zip: filename: filter: filter all', (t) => {
+    const filter = () => false;
+    const expect = 'No entries found in the tar stream';
+    
+    tar2zip(getFixtureTar(), {filter})
+        .on('error', (e) => {
+            t.equal(e.message, expect, 'should emit error when can not file file');
+            t.end();
+        });
+});
+
+test('tar2zip: filename: map: wrong type', (t) => {
+    const fn = () => tar2zip(getFixtureTar(), {
+        map: 'test'
+    });
+    
+    t.throws(fn, /map should be a function!/, 'should throw then not a function');
+    t.end();
+});
+
+test('tar2zip: filename: map: change path', (t) => {
+    const map = (header) => {
+        header.name = 'sub/' + header.name;
+        return header;
+    };
+    
+    tar2zip(getFixtureTar(), {map})
+        .on('file', (file) => {
+            t.equal(file, 'sub/fixture.txt', 'should change path');
+        })
+        .getStream()
+        .on('finish', () => {
+            t.end();
+        });
+});
+
 test('tar2zip: stream: error: not a tar', (t) => {
     const expect = 'No entries found in the tar stream';
     
