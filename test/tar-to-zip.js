@@ -88,9 +88,11 @@ test('tar2zip: filename: progress', (t) => {
 });
 
 test('tar2zip: filename: map: wrong type', (t) => {
-    const fn = () => tar2zip(5);
+    const fn = () => tar2zip(getFixtureTar(), {
+        map: 'test'
+    });
     
-    t.throws(fn, /file could be String or Readable Stream only!/, 'should throw when no args');
+    t.throws(fn, /map should be a function!/, 'should throw then not a function');
     t.end();
 });
 
