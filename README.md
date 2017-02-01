@@ -43,11 +43,15 @@ npm i tar-to-zip --save
 `tar-to-zip` can work with `filename` and `ReadableStream`. When `filename` used `tar-to-zip` can emit
 progress of coverting (with `options`: `{progress: true}`).
 
+`tar-to-zip` can transform the files as they are being processed using `options`: `{map: (fileHeader) => fileHeader}` and `options`: `{filter: (fileHeader) => true`
+
 ### tarToZip(filename, options)
 
 - `filename` - **string** name of the file
 - `options` - **object** with properties:
   - `progress` - whether emit `progress` event.
+  - `filter` - filter function to filter out files `(fileHeader) => true`. Return `false` to exclude a file.
+  - `map` - map function to transform files `(fileHeader) => fileHeader`. E.g. Change fileHeader.name to rename a file. `({ name }) => { if (name === 'example.md') return { name: 'example.txt' } ) }`
 
 ```js
 const tarToZip = require('tar-to-zip');
@@ -62,7 +66,7 @@ const onFinish = (e) => {
 };
 
 const onError = ({message}) => {
-    console.error(message)
+    console.error(message);
 };
 
 const zip = fs.createWriteStream('file.zip');
