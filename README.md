@@ -140,7 +140,6 @@ const filter = ({name}) => {
     return name === 'example.txt';
 };
 
-
 // replace all .txt extensions with .doc
 const map = ({name}) => {
     return {
