@@ -87,6 +87,26 @@ test('tar2zip: filename: progress', (t) => {
         });
 });
 
+test('tar2zip: filename: filter: wrong type', (t) => {
+    const fn = () => tar2zip(getFixtureTar(), {
+        filter: 'test'
+    });
+    
+    t.throws(fn, /filter should be a function!/, 'should throw then not a function');
+    t.end();
+});
+
+test('tar2zip: filename: filter: filter all', (t) => {
+    const filter = () => false;
+    const expect = 'No entries found in the tar stream';
+    
+    tar2zip(getFixtureTar(), {filter})
+        .on('error', (e) => {
+            t.equal(e.message, expect, 'should emit error when can not file file');
+            t.end();
+        });
+});
+
 test('tar2zip: filename: map: wrong type', (t) => {
     const fn = () => tar2zip(getFixtureTar(), {
         map: 'test'
@@ -94,17 +114,6 @@ test('tar2zip: filename: map: wrong type', (t) => {
     
     t.throws(fn, /map should be a function!/, 'should throw then not a function');
     t.end();
-});
-
-test('tar2zip: filename: map: filter all', (t) => {
-    const map = () => false;
-    const expect = 'No entries found in the tar stream';
-    
-    tar2zip(getFixtureTar(), {map})
-        .on('error', (e) => {
-            t.equal(e.message, expect, 'should emit error when can not file file');
-            t.end();
-        });
 });
 
 test('tar2zip: filename: map: change path', (t) => {
