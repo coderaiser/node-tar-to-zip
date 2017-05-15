@@ -1,6 +1,6 @@
 {
   "name": "tar-to-zip",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "convert tar and tar.gz archives to zip",
   "main": "lib/tar-to-zip.js",
   "bin": {
