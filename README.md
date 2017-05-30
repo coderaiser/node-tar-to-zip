@@ -55,6 +55,7 @@ progress of coverting (with `options`: `{progress: true}`).
 const tarToZip = require('tar-to-zip');
 const fs = require('fs');
 const {stdout} = process;
+
 const onProgress = (n) => {
     stdout.write(`\r${n}`);
 };
@@ -73,7 +74,7 @@ const progress = true;
 tarToZip('file.tar.gz', {progress})
     .on('progress', onProgress)
     .on('file', console.log)
-    .on('error', onError);
+    .on('error', onError)
     .getStream()
     .pipe(zip)
     .on('finish', onFinish);
@@ -88,6 +89,7 @@ tarToZip('file.tar.gz', {progress})
 const tarToZip = require('tar-to-zip');
 const fs = require('fs');
 const {stdout} = process;
+
 const onProgress = (n) => {
     stdout.write(`\r${n}`);
 };
@@ -104,8 +106,9 @@ const zip = fs.createWriteStream('file.zip');
 const progress = true;
 
 tarToZip(tar, {progress})
+    .on('progress', onProgress)
     .on('file', console.log)
-    .on('error', onError);
+    .on('error', onError)
     .getStream()
     .pipe(zip)
     .on('finish', onFinish);
@@ -134,22 +137,18 @@ const onError = ({message}) => {
 };
 
 const zip = fs.createWriteStream('file.zip');
+const progress = false;
 
 // exclude all but example.txt
-const filter = ({name}) => {
-    return name === 'example.txt';
-};
+const filter = ({name}) => name === 'example.txt';
 
 // replace all .txt extensions with .doc
-const map = ({name}) => {
-    return {
-        name: name.replace(/\.txt$/, '.doc');
-    }
-};
+const map = ({ name }) => ({ name: name.replace(/\.txt$/, '.doc') });
 
-tarToZip('file.tar.gz', {filter, progress})
+tarToZip('file.tar.gz', {filter, map, progress})
+    .on('progress', onProgress)
     .on('file', console.log)
-    .on('error', onError);
+    .on('error', onError)
     .getStream()
     .pipe(zip)
     .on('finish', onFinish);
