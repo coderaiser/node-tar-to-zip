@@ -2,14 +2,24 @@
 
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 
+const through2 = require('through2');
 const test = require('tape');
 const tar2zip = require('..');
 
 const noop = () => {};
 
-const getFixtureTar = (str = '') => {
-    return path.join(__dirname, 'fixture/fixture.tar.gz' + str);
+const getFixtureTar = () => {
+    return path.join(__dirname, 'fixture/fixture.tar.gz');
+};
+
+const getFixtureTar2 = () => {
+    return path.join(__dirname, 'fixture/fixture2.tar.gz');
+};
+
+const getFixtureZip2 = () => {
+    return path.join(__dirname, 'fixture/fixture2.zip');
 };
 
 const getFixtureTarDir = (str = '') => {
@@ -57,7 +67,7 @@ test('tar2zip: args: options: when file is stream', (t) => {
 });
 
 test('tar2zip: filename: error: file is absent', (t) => {
-    tar2zip(getFixtureTar('1'))
+    tar2zip(getFixtureTar() + '1')
         .on('error', (e) => {
             t.ok(/ENOENT/.test(e.message), 'should emit error when can not file file');
             t.end();
@@ -69,9 +79,34 @@ test('tar2zip: filename: error: not a tar', (t) => {
     
     tar2zip(getFixtureText())
         .on('error', (e) => {
-            t.equal(e.message, expect, 'should emit error when can not file file');
+            t.equal(e.message, expect, 'should emit error when can not find a file');
             t.end();
         });
+});
+
+test('tar2zip: can not untar file', (t) => {
+    const error = 'tar error';
+    const extract = () => through2((enc, chunk, fn) => fn(error));
+    
+    clean('..');
+    stub('tar-stream', {
+        extract
+    });
+    
+    const tar2zip = require('..');
+    
+    const progress = true;
+    tar2zip(getFixtureTar(), {progress})
+        .on('error', (e) => {
+            t.equal(e, error, 'should be equal');
+            
+            clean('..');
+            clean('tar-stream');
+            
+            require('..')
+            t.end();
+        })
+        .getStream()
 });
 
 test('tar2zip: filename: progress', (t) => {
@@ -85,6 +120,27 @@ test('tar2zip: filename: progress', (t) => {
         .on('finish', () => {
             t.end();
         });
+});
+
+test('tar2zip: files: zip: big file: same progress', (t) => {
+    const zipName = path.join(os.tmpdir(), String(Math.random()));
+    const zipStream = fs.createWriteStream(zipName);
+    
+    const progress = true;
+    
+    let i = 0;
+    
+    tar2zip(getFixtureTar2(), {progress})
+        .on('progress', (n) => {
+            i = n;
+        })
+        .getStream()
+        .on('finish', () => {
+            t.equal(i, 100, 'should be progress 100');
+            fs.unlinkSync(zipName);
+            t.end();
+        })
+        .pipe(zipStream)
 });
 
 test('tar2zip: filename: filter: wrong type', (t) => {
@@ -159,4 +215,12 @@ test('tar2zip: stream: directory', (t) => {
             t.end();
         });
 });
+
+function clean(name) {
+    delete require.cache[require.resolve(name)];
+}
+
+function stub(name, data) {
+    require.cache[require.resolve(name)].exports = data;
+}
 
