@@ -173,7 +173,7 @@ var tarToZip = require('tar-to-zip/legacy');
 - [Jag](https://github.com/coderaiser/node-jag "Jag") - Pack files and folders with tar and gzip.
 - [Jaguar](https://github.com/coderaiser/node-jaguar "Jaguar") - Pack and extract .tar.gz archives with emitter.
 - [OneZip](https://github.com/coderaiser/node-onezip "OneZip") - Pack and extract zip archives with emitter.
-- [zip-to-tar](https://github.com/coderaiser/node-zip-totar "Zip To Tar") - Convert zip archives to tar.
+- [zip-to-tar](https://github.com/coderaiser/node-zip-to-tar "Zip To Tar") - Convert zip archives to tar.
 
 ## License
 
