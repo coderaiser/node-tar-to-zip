@@ -1,3 +1,14 @@
+2018.05.02, v2.0.0
+
+feature:
+- (package) pipe-io v3.0.0
+- (tar-to-zip) drop support of node < 4
+- (package) redrun v6.0.0
+- (package) coveralls v3.0.0
+- (package) nyc v11.0.2
+- (package) eslint v4.0.0
+
+
 2017.05.31, v1.3.4
 
 feature:
