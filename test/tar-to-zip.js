@@ -75,7 +75,7 @@ test('tar2zip: filename: error: file is absent', (t) => {
 });
 
 test('tar2zip: filename: error: not a tar', (t) => {
-    const expect = 'No entries found in the tar stream';
+    const expect = 'Unexpected end of data';
     
     tar2zip(getFixtureText())
         .on('error', (e) => {
@@ -189,7 +189,7 @@ test('tar2zip: filename: map: change path', (t) => {
 });
 
 test('tar2zip: stream: error: not a tar', (t) => {
-    const expect = 'No entries found in the tar stream';
+    const expect = 'Unexpected end of data';
     
     tar2zip(getFixtureTextStream())
         .on('error', (e) => {
