@@ -45,7 +45,7 @@
   "dependencies": {
     "gunzip-maybe": "^1.3.1",
     "itchy": "^1.0.0",
-    "pipe-io": "^2.0.0",
+    "pipe-io": "^3.0.0",
     "tar-stream": "^1.5.2",
     "yazl": "^2.4.2"
   },
