@@ -161,13 +161,6 @@ tarToZip('file.tar.gz', {filter, map, progress})
 
 ```
 
-## Environments
-
-In old `node.js` environments that not fully supports `es2015`, `tar-to-zip` could be used with:
-
-```js
-var tarToZip = require('tar-to-zip/legacy');
-```
 ## Related
 
 - [Jag](https://github.com/coderaiser/node-jag "Jag") - Pack files and folders with tar and gzip.
