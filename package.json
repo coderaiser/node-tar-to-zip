@@ -8,9 +8,8 @@
     "tar-to-zip": "bin/tar-to-zip.js"
   },
   "scripts": {
-    "lint:eslint": "madrun lint:eslint",
-    "lint:eslint:bin": "madrun lint:eslint:bin",
     "lint": "madrun lint",
+    "fix:lint": "madrun fix:lint",
     "test": "madrun test",
     "coverage": "madrun coverage",
     "coverage:summary": "madrun coverage:summary",
@@ -47,6 +46,7 @@
     "itchy": "^1.0.0",
     "pipe-io": "^4.0.1",
     "tar-stream": "^2.1.4",
+    "try-to-catch": "^3.0.0",
     "yazl": "^2.4.2"
   },
   "devDependencies": {
@@ -55,11 +55,11 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-putout": "^6.0.1",
     "madrun": "^7.0.5",
+    "mock-require": "^3.0.3",
     "nodemon": "^2.0.6",
     "nyc": "^15.1.0",
     "putout": "^11.0.5",
     "supertape": "^2.0.1",
-    "tape": "^4.6.2",
     "through2": "^4.0.2"
   }
 }
