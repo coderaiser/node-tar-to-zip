@@ -8,17 +8,17 @@
     "tar-to-zip": "bin/tar-to-zip.js"
   },
   "scripts": {
-    "lint:eslint": "eslint lib",
-    "lint:eslint:bin": "eslint bin --config .eslint-bin.rc",
-    "lint": "redrun lint:*",
-    "test": "tape 'test/**/*.js'",
-    "coverage": "nyc npm test",
-    "coverage:summary": "nyc --reporter=text-summary npm test",
-    "report": "nyc report --reporter=text-lcov | coveralls",
-    "watcher": "nodemon -w test -w lib --exec",
-    "watch:test": "npm run watcher -- npm test",
-    "watch:coverage": "npm run watcher -- npm run coverage",
-    "watch:lint": "npm run watcher -- npm run lint"
+    "lint:eslint": "madrun lint:eslint",
+    "lint:eslint:bin": "madrun lint:eslint:bin",
+    "lint": "madrun lint",
+    "test": "madrun test",
+    "coverage": "madrun coverage",
+    "coverage:summary": "madrun coverage:summary",
+    "report": "madrun report",
+    "watcher": "madrun watcher",
+    "watch:test": "madrun watch:test",
+    "watch:coverage": "madrun watch:coverage",
+    "watch:lint": "madrun watch:lint"
   },
   "repository": {
     "type": "git",
@@ -51,10 +51,14 @@
   },
   "devDependencies": {
     "coveralls": "^3.0.0",
-    "eslint": "^4.0.0",
-    "nodemon": "^1.11.0",
-    "nyc": "^11.0.2",
-    "redrun": "^7.0.0",
+    "eslint": "^7.13.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-putout": "^6.0.1",
+    "madrun": "^7.0.5",
+    "nodemon": "^2.0.6",
+    "nyc": "^15.1.0",
+    "putout": "^11.0.5",
+    "supertape": "^2.0.1",
     "tape": "^4.6.2",
     "through2": "^2.0.3"
   }
